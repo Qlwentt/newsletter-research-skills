@@ -10,6 +10,18 @@ You don't have to use all three skills together. Mix and match based on what you
 | **content-summarizer**   | Distills sources into key takeaways | Sources | Summary with insights      |
 | **newsletter-formatter** | Formats for TLDR-style newsletter   | Summary | Ready-to-publish blurb     |
 
+## Two Ways to Use Skills
+
+### Option A: Natural Language (Recommended for most users)
+
+Just tell Claude what you want in plain English. Claude figures out which skills to use.
+
+### Option B: Structured Data
+
+Pass JSON between skills for precise control. Useful when integrating with other tools or automations.
+
+Both approaches work with any combination below.
+
 ## Common Combinations
 
 ### Full Newsletter Blurb
@@ -18,9 +30,20 @@ You don't have to use all three skills together. Mix and match based on what you
 
 **When to use:** You have a topic and want a publish-ready blurb.
 
-**Try saying:**
+**Natural language:**
 
 > Research [TOPIC] and write a TLDR-style newsletter blurb with a linked headline.
+
+**Structured:**
+
+```json
+{
+  "topic": "recent developments in AI code assistants",
+  "time_frame": "past 7 days"
+}
+```
+
+Claude will run all three skills and return the formatted blurb.
 
 ---
 
@@ -30,9 +53,20 @@ You don't have to use all three skills together. Mix and match based on what you
 
 **When to use:** You want to understand a topic but don't need newsletter formatting.
 
-**Try saying:**
+**Natural language:**
 
 > Research [TOPIC] and summarize the key takeaways.
+
+**Structured:**
+
+```json
+{
+  "topic": "remote work trends in tech",
+  "num_sources": 5
+}
+```
+
+Then ask Claude to summarize without formatting.
 
 ---
 
@@ -42,9 +76,24 @@ You don't have to use all three skills together. Mix and match based on what you
 
 **When to use:** You already have notes or sources and just need them formatted.
 
-**Try saying:**
+**Natural language:**
 
 > Here are my notes on [TOPIC]: [paste notes]. Summarize and format as a TLDR-style newsletter blurb.
+
+**Structured:**
+
+```json
+{
+  "topic": "your topic",
+  "sources": [
+    {
+      "title": "Article title",
+      "url": "https://example.com/article",
+      "key_points": ["point 1", "point 2"]
+    }
+  ]
+}
+```
 
 ---
 
@@ -54,9 +103,19 @@ You don't have to use all three skills together. Mix and match based on what you
 
 **When to use:** You just want sources, you'll handle the rest yourself.
 
-**Try saying:**
+**Natural language:**
 
 > Find 5 recent sources about [TOPIC]. Give me the key points from each.
+
+**Structured:**
+
+```json
+{
+  "topic": "AI regulation in the EU",
+  "num_sources": 5,
+  "time_frame": "past 30 days"
+}
+```
 
 ---
 
@@ -66,9 +125,24 @@ You don't have to use all three skills together. Mix and match based on what you
 
 **When to use:** You have content that needs to be distilled.
 
-**Try saying:**
+**Natural language:**
 
 > Here's an article: [paste or link]. What are the key takeaways?
+
+**Structured:**
+
+```json
+{
+  "topic": "the article topic",
+  "sources": [
+    {
+      "title": "Article title",
+      "url": "https://example.com",
+      "key_points": ["main point 1", "main point 2", "main point 3"]
+    }
+  ]
+}
+```
 
 ---
 
@@ -78,9 +152,21 @@ You don't have to use all three skills together. Mix and match based on what you
 
 **When to use:** You have a summary and just need TLDR-style output.
 
-**Try saying:**
+**Natural language:**
 
 > Format this as a TLDR newsletter blurb with a linked headline: [paste summary]
+
+**Structured:**
+
+```json
+{
+  "topic": "your topic",
+  "core_narrative": "The main story in 1-2 sentences.",
+  "key_takeaways": ["takeaway 1", "takeaway 2"],
+  "implications": "Why this matters.",
+  "sources": [{ "title": "Primary source", "url": "https://example.com" }]
+}
+```
 
 ## Create Your Own Combination
 
@@ -100,3 +186,4 @@ You can ask Claude to do any combination by describing what you want in plain la
 - **Ask for checkpoints.** Say "show me the sources before summarizing" if you want control.
 - **Iterate.** Ask Claude to adjust the output: "make it shorter" or "focus on the funding angle."
 - **Be specific.** "AI news" is vague. "OpenAI's latest model release" gets better results.
+- **Use structured data for automation.** If you're building workflows in n8n or other tools, JSON inputs give you consistent results.
