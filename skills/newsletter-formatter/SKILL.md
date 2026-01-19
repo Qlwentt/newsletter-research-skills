@@ -40,24 +40,27 @@ When given summarized content:
 
 ## Input Format
 
-Expects output from content-summarizer skill or equivalent:
+This skill accepts either:
+
+**Structured data** (from content-summarizer skill or equivalent):
 
 ```json
 {
   "topic": "string",
   "core_narrative": "string",
   "key_takeaways": ["string"],
-  "implications": "string"
-}
-```
-
-Also expects a `sources` array for linking:
-
-```json
-{
+  "implications": "string",
   "sources": [{ "title": "string", "url": "string" }]
 }
 ```
+
+**Or natural language:**
+
+- A written summary with source links
+- "Here's my summary of [topic]: ... The main source is [url]"
+- Bullet points of key takeaways plus a source link
+
+Claude will normalize the input before formatting. If no source URL is provided, Claude will flag `"needs_source_link": true` in the output.
 
 ## Output Format
 

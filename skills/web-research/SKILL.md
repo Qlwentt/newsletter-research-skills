@@ -29,6 +29,28 @@ When asked to research a topic:
    - 2-3 key points or takeaways
 4. Return results in the structured format below
 
+## Input Format
+
+This skill accepts either:
+
+**Structured request:**
+
+```json
+{
+  "topic": "the topic to research",
+  "time_frame": "optional - e.g., 'past 7 days'",
+  "num_sources": "optional - defaults to 4-6"
+}
+```
+
+**Or natural language:**
+
+- "Research recent news about AI code assistants"
+- "Find sources about the OpenAI drama from last week"
+- "What's been happening with Tesla stock?"
+
+Claude will interpret the request and proceed with research.
+
 ## Output Format
 
 ```json

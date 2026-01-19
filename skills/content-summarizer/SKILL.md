@@ -34,22 +34,30 @@ When given structured source data:
 
 4. Return results in the structured format below
 
-## Input Format
-
-Expects output from web-research skill or equivalent:
-
 ```json
 {
   "topic": "string",
+  "research_date": "YYYY-MM-DD",
   "sources": [
     {
       "title": "string",
       "url": "string",
+      "publication_date": "YYYY-MM-DD or null",
       "key_points": ["string"]
     }
-  ]
+  ],
+  "summary": "string"
 }
 ```
+
+**Or natural language:**
+
+- Pasted article text or notes
+- URLs to articles (Claude will read them)
+- Bullet points or rough notes on a topic
+- "Here's what I found about [topic]: ..."
+
+Claude will normalize the input into structured data before processing.
 
 ## Output Format
 
@@ -64,7 +72,8 @@ Expects output from web-research skill or equivalent:
   ],
   "implications": "1-2 sentences on why this matters or what might happen next",
   "source_count": 4,
-  "confidence": "high | medium | low"
+  "confidence": "high | medium | low",
+  "sources": [{ "title": "string", "url": "string" }]
 }
 ```
 
@@ -87,9 +96,12 @@ Expects output from web-research skill or equivalent:
 ```json
 {
   "topic": "recent developments in AI code assistants",
+  "research_date": "2025-01-19",
   "sources": [
     {
       "title": "Cursor raises $100M",
+      "url": "https://example.com/cursor-funding",
+      "publication_date": "2025-01-15",
       "key_points": [
         "Series B at $1B valuation",
         "Expanding enterprise features"
@@ -97,16 +109,21 @@ Expects output from web-research skill or equivalent:
     },
     {
       "title": "GitHub Copilot adds voice coding",
+      "url": "https://example.com/copilot-voice",
+      "publication_date": "2025-01-17",
       "key_points": ["New accessibility features", "Voice-to-code in beta"]
     },
     {
       "title": "Stack Overflow survey: 78% of devs now use AI assistants",
+      "url": "https://stackoverflow.com/survey/2025",
+      "publication_date": "2025-01-10",
       "key_points": [
         "Up from 52% last year",
         "Productivity gains reported at 30-50%"
       ]
     }
-  ]
+  ],
+  "summary": "The AI code assistant market continues rapid growth, with major players securing significant funding and expanding enterprise capabilities."
 }
 ```
 
@@ -123,6 +140,20 @@ Expects output from web-research skill or equivalent:
   ],
   "implications": "AI-assisted coding is becoming table stakes for developer productivity. Companies slow to adopt may face competitive disadvantages in hiring and shipping speed.",
   "source_count": 3,
-  "confidence": "high"
+  "confidence": "high",
+  "sources": [
+    {
+      "title": "Stack Overflow Developer Survey 2025",
+      "url": "https://stackoverflow.com/survey/2025"
+    },
+    {
+      "title": "Cursor raises $100M",
+      "url": "https://example.com/cursor-funding"
+    },
+    {
+      "title": "GitHub Copilot adds voice coding",
+      "url": "https://example.com/copilot-voice"
+    }
+  ]
 }
 ```
