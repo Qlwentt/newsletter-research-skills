@@ -7,6 +7,8 @@ description: Transform a content summary into a publication-ready newsletter blu
 
 Turn synthesized content into a punchy, scannable newsletter blurb that respects readers' time.
 
+**Critical:** Always format from the actual input provided. The examples in this file are for illustration only - never use them as actual data.
+
 ## When to Use
 
 - You have output from content-summarizer skill (or equivalent summary data)

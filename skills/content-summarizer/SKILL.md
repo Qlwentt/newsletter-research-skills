@@ -7,6 +7,8 @@ description: Take structured source data and synthesize it into a concise, insig
 
 Transform raw research into a clear, synthesized summary that captures what matters.
 
+**Critical:** Always synthesize from the actual input provided. The examples in this file are for illustration only - never use them as actual data.
+
 ## When to Use
 
 - You have output from the web-research skill (or similar structured source data)
