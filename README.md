@@ -87,4 +87,19 @@ newsletter-research-skills/
 │   └── README.md
 └── docs/
     └── CREATING-NEW-SKILLS.md
+
+## TLDR-specific Considerations
+
+This library is one way to implement composable skill architecture for content workflows. An implementation that matched TLDRs specific format would likely differ in a few ways:
+
+**Single-source summarization:** Each TLDR blurb links to one article, so all facts should trace to that source. The current multi-source approach is better suited for research briefs. This version would summarize individual articles rather than synthesizing across sources.
+
+**Curated selection workflow:** Rather than outputting one blurb, a different workflow might:
+1. Research and surface the top 10 most impactful stories on a topic
+2. Generate a blurb for each story individually
+3. Let editors pick which ones make it into the newsletter
+
+This gives editors control while automating the research and drafting work.
+
+**Tighter recency filters:** TLDR is a daily newsletter covering yesterday's news. TLDR-specific skills would filter more aggressively for recency (past 24-48 hours).
 ```
