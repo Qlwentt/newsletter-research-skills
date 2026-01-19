@@ -7,7 +7,12 @@ description: Search the web for recent information on a topic and return structu
 
 Research a topic by finding recent, relevant sources and extracting key information.
 
-**Critical:** Always perform fresh web research. The examples in this file are for illustration only - never use them as actual data.
+**Critical:** Always perform fresh web research. The examples in this file are for illustration only - never use them as actual data, and do not let them influence your search queries. Base your search solely on the user's request. Do not add years or dates to search queries unless the user specifies a time period.
+
+**Output behavior:**
+
+- If the user asks for a complete workflow in one request (e.g., "research X and write a newsletter blurb"), work silently and pass data to the next step without showing intermediate output.
+- If the user asks for just this step (e.g., "research X" or "summarize these sources"), show the output.
 
 ## When to Use
 
@@ -24,12 +29,16 @@ When asked to research a topic:
    - Reputable publications (major news outlets, industry blogs, official announcements)
    - Recency (prefer sources from the last 7 days when possible)
    - Relevance (directly addresses the topic, not tangential)
-3. For each source, extract:
+3. Search tips:
+   - Do NOT include years in your search query unless the user specifically asks for a time period
+   - Let the search engine determine recency naturally
+   - Use the topic keywords only
+4. For each source, extract:
    - Title
    - URL
    - Publication date (if available)
    - 2-3 key points or takeaways
-4. Return results in the structured format below
+5. Return results in the structured format below
 
 ## Input Format
 
@@ -79,25 +88,24 @@ Claude will interpret the request and proceed with research.
 
 ## Example
 
-**Input**: "Research recent developments in AI code assistants"
+**Note:** This is a fictional example for illustration only.
+
+**Input**: "Research recent news about the fictional Acme Corporation"
 
 **Output**:
 
 ```json
 {
-  "topic": "recent developments in AI code assistants",
-  "research_date": "2025-01-19",
+  "topic": "recent news about the fictional Acme Corporation",
+  "research_date": "YYYY-MM-DD",
   "sources": [
     {
-      "title": "Cursor raises $100M to expand AI coding assistant",
-      "url": "https://example.com/cursor-funding",
-      "publication_date": "2025-01-15",
-      "key_points": [
-        "Cursor secured Series B funding at $1B valuation",
-        "Plans to expand enterprise features and team collaboration"
-      ]
+      "title": "Acme Corp Announces New Widget",
+      "url": "https://example.com/acme-widget",
+      "publication_date": "YYYY-MM-DD",
+      "key_points": ["Example key point one", "Example key point two"]
     }
   ],
-  "summary": "The AI code assistant market continues rapid growth, with major players securing significant funding and expanding enterprise capabilities."
+  "summary": "Example summary of what sources collectively say."
 }
 ```

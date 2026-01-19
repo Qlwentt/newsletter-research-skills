@@ -40,6 +40,10 @@ When given summarized content:
    - Make it specific and newsworthy
    - Numbers and specifics pop (e.g., "78% of Developers" not "Most Developers")
 
+**Critical:** Always format from the actual input provided. The examples in this file are for illustration only - never use them as actual data.
+
+**Output behavior:** Only output the formatted headline and blurb. Do not show JSON, intermediate steps, or explanations unless the user specifically asks to see them.
+
 ## Input Format
 
 This skill accepts either:

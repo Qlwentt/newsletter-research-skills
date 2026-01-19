@@ -9,6 +9,13 @@ Transform raw research into a clear, synthesized summary that captures what matt
 
 **Critical:** Always synthesize from the actual input provided. The examples in this file are for illustration only - never use them as actual data.
 
+**Output behavior:** When this skill is part of a chain (e.g., leading to newsletter formatting), work silently - do not output the JSON to the user. Only output to the user when this skill is used standalone, or when the user explicitly asks to see the summary.
+
+**Output behavior:**
+
+- If the user asks for a complete workflow in one request (e.g., "research X and write a newsletter blurb"), work silently and pass data to the next step without showing intermediate output.
+- If the user asks for just this step (e.g., "research X" or "summarize these sources"), show the output.
+
 ## When to Use
 
 - You have output from the web-research skill (or similar structured source data)
