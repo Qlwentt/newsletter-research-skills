@@ -14,6 +14,15 @@ Use them together or mix and match based on what you need.
 
 ## Quick Start
 
+Any easy way to use with Claude on Pro/Max/Enterprise subscriptions is:
+
+- Go to Settings -> Capabilities -> Skills
+- Click "Add"
+- upload the SKILL.md files
+- start a new conversation with Claude
+
+Then...
+
 ### If you just want a newsletter blurb:
 
 Tell Claude:
@@ -42,8 +51,8 @@ Each skill accepts both natural language and structured JSON input. See individu
 
 ## Documentation
 
-- [Newsletter Blurb Workflow](workflows/newsletter-blurb.md) - Step-by-step guide for the full workflow
-- [Mixing and Matching Skills](workflows/mixing-and-matching-skills.md) - How to combine skills for different use cases
+- [Newsletter Blurb Workflow](workflows/NEWSLETTER-BLURB.md) - Step-by-step guide for the full workflow
+- [Mixing and Matching Skills](workflows/MIXING-AND-MATCHING-SKILLS.md) - How to combine skills for different use cases
 - [Creating New Skills](docs/CREATING-NEW-SKILLS.md) - Template and guidelines for adding skills
 
 ## Example Output
@@ -87,6 +96,7 @@ newsletter-research-skills/
 │   └── README.md
 └── docs/
     └── CREATING-NEW-SKILLS.md
+```
 
 ## TLDR-specific Considerations
 
@@ -95,6 +105,7 @@ This library is one way to implement composable skill architecture for content w
 **Single-source summarization:** Each TLDR blurb links to one article, so all facts should trace to that source. The current multi-source approach is better suited for research briefs. This version would summarize individual articles rather than synthesizing across sources.
 
 **Curated selection workflow:** Rather than outputting one blurb, a different workflow might:
+
 1. Research and surface the top 10 most impactful stories on a topic
 2. Generate a blurb for each story individually
 3. Let editors pick which ones make it into the newsletter
@@ -102,4 +113,7 @@ This library is one way to implement composable skill architecture for content w
 This gives editors control while automating the research and drafting work.
 
 **Tighter recency filters:** TLDR is a daily newsletter covering yesterday's news. TLDR-specific skills would filter more aggressively for recency (past 24-48 hours).
+
+```
+
 ```
