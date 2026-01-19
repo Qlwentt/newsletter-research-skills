@@ -7,6 +7,8 @@ description: Search the web for recent information on a topic and return structu
 
 Research a topic by finding recent, relevant sources and extracting key information.
 
+Note: **Important:** Always perform fresh web research. Never use example data from this file.
+
 ## When to Use
 
 - User needs to gather sources on a topic
