@@ -1,0 +1,304 @@
+{
+  "name": "Newsletter Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "f8f587a5-5bb4-485d-991a-03aaf5d52091",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5f0c278c-70aa-4c7c-b376-2dff0f3b83f8",
+      "name": "Webhook",
+      "webhookId": "f8f587a5-5bb4-485d-991a-03aaf5d52091"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($json.body) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1072,
+        0
+      ],
+      "id": "3b82595b-f255-4cd0-8cec-f9d0e3a2f6cf",
+      "name": "Synthesize",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "dypEDIHud69kaJz2",
+          "name": "ANTHROPIC API KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($json.body) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        656,
+        0
+      ],
+      "id": "5ef11c09-eb87-4b5c-81e2-ef7111c0267e",
+      "name": "Research",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "dypEDIHud69kaJz2",
+          "name": "ANTHROPIC API KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($json.body) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1488,
+        0
+      ],
+      "id": "561a691b-7e0f-414f-ad79-ce2df5204aaf",
+      "name": "Format",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "dypEDIHud69kaJz2",
+          "name": "ANTHROPIC API KEY"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"api_key\": \"[YOUR-TAVILY-API-KEY-HERE]\",\n  \"query\": \"{{ $json.body.topic }}\",\n  \"search_depth\": \"basic\",\n  \"max_results\": 5,\n  \"include_answer\": false\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c0b0ec91-22ea-4ed3-9b1c-c99d6c946367",
+      "name": "Web Search"
+    },
+    {
+      "parameters": {
+        "jsCode": "const searchResults = JSON.stringify($input.first().json.results);\n\nconst requestBody = {\n  model: \"claude-sonnet-4-20250514\",\n  max_tokens: 2048,\n  system: \"You are a web researcher. Structure the provided search results into a clean format. Return ONLY the raw JSON object. Do not wrap it in markdown code blocks or any other formatting.\",\n  messages: [\n    {\n      role: \"user\",\n      content: \"Structure these search results into JSON format. Search results: \" + searchResults + \". Return JSON with: topic (string), research_date (today's date YYYY-MM-DD), sources (array with title, url, publication_date if available, key_points array), and summary (2-3 sentence synthesis).\"\n    }\n  ]\n};\n\nreturn {\n  json: {\n    body: requestBody\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "5d7384aa-cb96-4a49-93f5-ced9273955d7",
+      "name": "Build Research Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const researchData = $input.first().json.content[0].text;\n\nconst requestBody = {\n  model: \"claude-sonnet-4-20250514\",\n  max_tokens: 2048,\n  system: \"You are a content summarizer. Synthesize research into clear takeaways. Return JSON format: {\\\"topic\\\": \\\"string\\\", \\\"core_narrative\\\": \\\"string\\\", \\\"key_takeaways\\\": [\\\"string\\\"], \\\"implications\\\": \\\"string\\\", \\\"source_count\\\": number, \\\"confidence\\\": \\\"high|medium|low\\\", \\\"sources\\\": [{\\\"title\\\": \\\"string\\\", \\\"url\\\": \\\"string\\\"}]}. Return ONLY the raw JSON object. Do not wrap it in markdown code blocks or any other formatting.\",\n  messages: [\n    {\n      role: \"user\",\n      content: \"Summarize this research into key takeaways. Input: \" + researchData + \". Return JSON with: topic, core_narrative, key_takeaways array, implications, source_count, confidence, and sources array with title and url.\"\n    }\n  ]\n};\n\nreturn {\n  json: {\n    body: requestBody\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        864,
+        0
+      ],
+      "id": "50bf6f2b-0409-47f5-aff7-4122d29ed507",
+      "name": "Build Synthesize Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const summaryData = $input.first().json.body.content[0].text;\n\nconst requestBody = {\n  model: \"claude-sonnet-4-20250514\",\n  max_tokens: 2048,\n  system: \"You are a newsletter formatter. Create TLDR-style blurbs. Return JSON format: {\\\"headline\\\": \\\"[Full Headline Text](https://source-url)\\\", \\\"blurb\\\": \\\"string\\\", \\\"word_count\\\": number, \\\"category_suggestion\\\": \\\"string\\\"}. Return ONLY the raw JSON object. Do not wrap it in markdown code blocks or any other formatting.\",\n  messages: [\n    {\n      role: \"user\",\n      content: \"Format this summary as a TLDR-style newsletter blurb. Input: \" + summaryData + \". The headline should be the entire clickable link to the primary source. Keep it punchy, 80-150 words.\"\n    }\n  ]\n};\n\nreturn {\n  json: {\n    body: requestBody\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        0
+      ],
+      "id": "e5aab3af-2104-461f-81e7-5971be7fd8e1",
+      "name": "Build Format Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Web Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research": {
+      "main": [
+        [
+          {
+            "node": "Build Synthesize Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Synthesize": {
+      "main": [
+        [
+          {
+            "node": "Build Format Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Web Search": {
+      "main": [
+        [
+          {
+            "node": "Build Research Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Research Request": {
+      "main": [
+        [
+          {
+            "node": "Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Synthesize Request": {
+      "main": [
+        [
+          {
+            "node": "Synthesize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Format Request": {
+      "main": [
+        [
+          {
+            "node": "Format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "9c12b7e4-1dc9-4790-b275-32ef8485df2f",
+  "meta": {
+    "instanceId": "dbec4f947caa3c45c2d8a49c25c34d40513b43f4fc22ce8ba07a8b2a180a3e81"
+  },
+  "id": "5TWvZmTQWFUMe6Zp6kdUc",
+  "tags": []
+}
