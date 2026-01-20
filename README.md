@@ -1,6 +1,6 @@
-# Newsletter Research Skills
+# Newsletter Research Toolkit
 
-A composable Claude Skills library for newsletter content research and production.
+A composable Claude Skills library for newsletter content research and production, with n8n automation.
 
 ## What This Is
 
@@ -10,7 +10,7 @@ Three modular skills that chain together to turn a topic into a publish-ready ne
 2. **content-summarizer** → Synthesizes sources into key takeaways
 3. **newsletter-formatter** → Outputs a TLDR-style blurb with linked headline
 
-Use them together or mix and match based on what you need.
+Use them together or mix and match based on what you need. Also includes an n8n workflow for fully automated newsletter research.
 
 ## Quick Start
 
@@ -49,10 +49,19 @@ Review the sources, then:
 
 Each skill accepts both natural language and structured JSON input. See individual skill files for details.
 
+## n8n Automation
+
+For fully automated newsletter research, import the n8n workflow:
+
+- [n8n Workflow](workflows/n8n/) - Webhook-triggered automation that chains all three skills with real web search via Tavily API
+
+The workflow accepts a topic via POST request and returns a formatted newsletter blurb.
+
 ## Documentation
 
 - [Newsletter Blurb Workflow](workflows/NEWSLETTER-BLURB.md) - Step-by-step guide for the full workflow
 - [Mixing and Matching Skills](workflows/MIXING-AND-MATCHING-SKILLS.md) - How to combine skills for different use cases
+- [n8n Workflow Setup](workflows/n8n/README.md) - How to import and configure the n8n automation
 - [Creating New Skills](docs/CREATING-NEW-SKILLS.md) - Template and guidelines for adding skills
 
 ## Example Output
@@ -78,7 +87,7 @@ Up from 52% just a year ago, according to Stack Overflow's latest survey. The su
 ## Project Structure
 
 ```
-newsletter-research-skills/
+newsletter-research-toolkit/
 ├── README.md
 ├── skills/
 │   ├── web-research/
@@ -91,7 +100,8 @@ newsletter-research-skills/
 │   ├── NEWSLETTER-BLURB.md
 │   ├── MIXING-AND-MATCHING-SKILLS.md
 │   └── n8n/
-│       └── README.md
+│       ├── README.md
+│       └── newsletter-automation.json
 ├── app/
 │   └── README.md
 └── docs/
@@ -113,7 +123,3 @@ This library is one way to implement composable skill architecture for content w
 This gives editors control while automating the research and drafting work.
 
 **Tighter recency filters:** TLDR is a daily newsletter covering yesterday's news. TLDR-specific skills would filter more aggressively for recency (past 24-48 hours).
-
-```
-
-```
